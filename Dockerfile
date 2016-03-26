@@ -64,11 +64,11 @@ RUN Rscript -e 'install.packages("tidyr")'
 ## Taken from https://github.com/rocker-org/hadleyverse/blob/master/Dockerfile
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    lmodern=2.004.4-3 \
-    texlive-fonts-recommended=2013.20140215-1 \
-    texlive-humanities=2013.20140215-2 \
-    texlive-latex-extra=2013.20140215-2 \
-    texinfo=5.2.0.dfsg.1-2 \
+    lmodern \
+    texlive-fonts-recommended \
+    texlive-humanities \
+    texlive-latex-extra \
+    texinfo \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/ \
   && cd /usr/share/texlive/texmf-dist \
