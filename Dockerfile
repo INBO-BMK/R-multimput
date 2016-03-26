@@ -70,7 +70,6 @@ RUN apt-get update \
     texlive-latex-extra \
     texinfo \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/ \
   && cd /usr/share/texlive/texmf-dist \
   && wget http://mirrors.ctan.org/install/fonts/inconsolata.tds.zip \
   && unzip inconsolata.tds.zip \
