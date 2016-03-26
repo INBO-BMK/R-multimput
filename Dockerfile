@@ -59,3 +59,22 @@ RUN Rscript -e 'install.packages("snowfall")'
 
 ## install tidyr
 RUN Rscript -e 'install.packages("tidyr")'
+
+## Add minimal LaTeX configuration
+## Taken from https://github.com/rocker-org/hadleyverse/blob/master/Dockerfile
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    lmodern=2.004.4-3 \
+    texlive-fonts-recommended=2013.20140215-1 \
+    texlive-humanities=2013.20140215-2 \
+    texlive-latex-extra=2013.20140215-2 \
+    texinfo=5.2.0.dfsg.1-2 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/ \
+  && cd /usr/share/texlive/texmf-dist \
+  && wget http://mirrors.ctan.org/install/fonts/inconsolata.tds.zip \
+  && unzip inconsolata.tds.zip \
+  && rm inconsolata.tds.zip \
+  && echo "Map zi4.map" >> /usr/share/texlive/texmf-dist/web2c/updmap.cfg \
+  && mktexlsr \
+  && updmap-sys
