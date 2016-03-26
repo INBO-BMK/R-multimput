@@ -2,23 +2,60 @@ FROM r-base
 
 MAINTAINER "Thierry Onkelinx" thierry.onkelinx@inbo.be
 
+## docker build -t inbobmk/r-multimput .
+
+## Install wget
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    wget \
+  && apt-get clean
+
+## install devtools
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     git \
     libssl-dev \
     libssh2-1-dev \
-    && Rscript -e 'install.packages("devtools")'
+  && Rscript -e 'install.packages("devtools")' \
+  && apt-get clean
+
+## install assertthat
+RUN Rscript -e 'install.packages("assertthat")'
+
+## install covr
+RUN Rscript -e 'install.packages("covr")'
+
+## install dplyr
 RUN Rscript -e 'devtools::install_github("hadley/dplyr")'
+
+## install INLA
 RUN Rscript -e 'install.packages("sp")' \
   && Rscript -e 'install.packages("INLA", repos="http://www.math.ntnu.no/inla/R/stable")'
-RUN Rscript -e 'install.packages("tidyr")'
-RUN Rscript -e 'install.packages("assertthat")'
-RUN Rscript -e 'install.packages("lme4")'
-RUN Rscript -e 'install.packages("mvtnorm")'
-RUN Rscript -e 'install.packages("snowfall")'
-RUN Rscript -e 'install.packages("mgcv")'
+
+## install knitr
 RUN Rscript -e 'install.packages("knitr")'
-RUN Rscript -e 'install.packages("rmarkdown")'
-RUN Rscript -e 'install.packages("covr")'
+
+## install lintr
 RUN Rscript -e 'install.packages("lintr")'
+
+## install lme4
+RUN Rscript -e 'install.packages("lme4")'
+
+## install mgcv
+RUN Rscript -e 'install.packages("mgcv")'
+
+## install mvtnorm
+RUN Rscript -e 'install.packages("mvtnorm")'
+
+## Install rmarkdown
+RUN wget https://github.com/jgm/pandoc/releases/download/1.16.0.2/pandoc-1.16.0.2-1-amd64.deb \
+  && dpkg -i pandoc-1.16.0.2-1-amd64.deb \
+  && rm pandoc-1.16.0.2-1-amd64.deb \
+  && Rscript -e 'install.packages("rmarkdown")'
+
+## install snowfall
+RUN Rscript -e 'install.packages("snowfall")'
+
+## install tidyr
+RUN Rscript -e 'install.packages("tidyr")'
